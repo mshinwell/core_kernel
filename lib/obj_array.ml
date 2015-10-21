@@ -41,12 +41,12 @@ let get t i =
      since (if this function is inlined and the array contains in-heap boxed values)
      wrong register typing may result, leading to a failure to register necessary
      GC roots. *)
-  Obj.repr (Array.get (Obj.magic (t : t) : not_a_float array) i : int)
+  Obj.repr (Array.get (Obj.magic (t : t) : not_a_float array) i : not_a_float)
 ;;
 
 let unsafe_get t i =
   (* See comment on [get]. *)
-  Obj.repr (Array.unsafe_get (Obj.magic (t : t) : not_a_float array) i : int)
+  Obj.repr (Array.unsafe_get (Obj.magic (t : t) : not_a_float array) i : not_a_float)
 ;;
 
 (* For [set] and [unsafe_set], if a pointer is involved, we first do a physical-equality
