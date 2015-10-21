@@ -33,7 +33,7 @@ let volatile_contents buf = buf.bstr
 let add_char buf c =
   let pos = buf.pos in
   if pos >= buf.len then resize buf 1;
-  buf.bstr.{pos} <- c;
+  Bigstring.set buf.bstr pos c;
   buf.pos <- pos + 1;
 ;;
 
@@ -68,7 +68,7 @@ include
 
 let nth buf pos =
   if pos < 0 || pos >= buf.pos then invalid_arg "Bigbuffer.nth"
-  else buf.bstr.{pos}
+  else Bigstring.get buf.bstr pos
 
 let clear buf = buf.pos <- 0
 

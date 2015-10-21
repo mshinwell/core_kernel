@@ -16,6 +16,8 @@ include Z
 
 external aux_create: max_mem_waiting_gc:int -> size:int -> t = "bigstring_alloc"
 
+external test_allocation : unit -> 'a = "core_bigstring_test_allocation"
+
 let create ?max_mem_waiting_gc size =
   let max_mem_waiting_gc =
     match max_mem_waiting_gc with
@@ -37,6 +39,7 @@ TEST "create with different max_mem_waiting_gc" =
     let max_mem_waiting_gc = Byte_units.create mem_units 256. in
     for _i = 0 to large_int do
       let (_ : t) = create ~max_mem_waiting_gc large_int in
+      ignore (test_allocation ());  (* ensure we allocate something *)
       ()
     done;
     Alarm.delete alarm;
